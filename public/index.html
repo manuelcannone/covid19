@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Sito che permette di visuallizzare i dati sul covid 19">
+    <meta name="keywords" content="Covid19,covid19,Covid-19,covid-19,Covid 19,covid 19,Corona Virus, corona virus,Corona virus,corona Virus, italia,Italia,coronavirus,Coronavirus,CVD19,dati,dati corono virus,Italia">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Manuel Cannone">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- Style -->
+        <link rel="stylesheet" href="style/style.css">
+        <link rel="stylesheet" href="style/bootstrap">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <title>Covid-19 italia </title>
+</head>
+<body>
+    <div class="title center ">
+    <h1 class="center">COVID APP</h1>
+<p><span>Vuoi sapere le novita sul covid-19?,</span>qui potrai trovare tutto i dati necessari ed aggiornati, se ti interessa sapere solo i casi confermati in tutto il mondo ti bastare vedere la seguente figura </p>
+</div>
+
+<div id="bigData" class="conteiner center">
+  <!-- circle representing world cases -->
+<p>Casi confermati nel mondo</p>
+<div class="circle" name="cirlce">
+
+</div>
+
+</div>
+
+<div class="form">
+    <form>
+        <ul class="list center">
+            <li><h4>Inserisci il tuo stato</h4></li>
+     
+        </ul>
+
+        <div class="form-row">
+          <div class="col-7">
+          <div class="col">
+            <input type="text" class="form-control country"  name="countries" placeholder="es italy oppure IT ">
+            
+        </div>
+      
+        </div>
+
+      </form> 
+      <button onclick="return false"  class="bt">Ricerca</BUtton>   
+</div>
+<table class="table table-borderless">
+    <thead>
+      <tr>
+        <th scope="col">Data</th>
+        <th scope="col">Casi confermati</th>
+        <th scope="col">Morti</th>
+        <th scope="col">Guariti</th>
+       
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="grid">
+
+        <th ><p id="date"></p></th>
+        <td ><p id="confirmed"></p></td>
+        <td ><p id="death"></p></td>
+        <td id="actived"></td>
+        
+      </tr>
+      
+    </tbody>
+  </thead>
+  </table>
+  <section class="sectionSymptoms">
+  <div class="conteinerSymptoms">
+<h3>Sei hai questi sintomi potresi avere il covid-19:</h3>
+<ul class="symptomsList">
+  <li>Febbre</li>
+  <li>  Senso di nausea</li>
+  <li>  Tosse</li>
+  <li>  Difficolta respiratorie</li> 
+  <li>  Mal di gola</li>
+  <li>  In alcuni casi si puo anche contrarre la congiuntivite </li>
+</ul>
+<p>Se verifichi alcuni dei sintomi precedentemente prendi le dovute preoucazioni, contantta il numero verde <span>800.556060</span> disponibile dalle ore 09:00 alle ore 15:00, cercare di non avere contantti con le persone e di non toccare oggetti con uso ravicinato a zone intime o viso(es. rasoio, spazzolino , etc etc...), Se invece non hai il covid-19 i consigli rilasciati dal ministero della salute sono: lavarsi spesso le mani, non toccarsi viso e bocca, idossare mascherina, mantenere il metro di distanza.</p>
+<h6>Cosa posso fare in auto?</h6>
+<p>E bene sapere che nelle maggior parte delle auto il metro di distanza con il sedile paseggero non lo si ha, quindi è buona norma non avere nessun passeggero o un passeggero che abita nella stassa casa, non tutti i comuni applicano sanzioni per chi non segue questa norma, se la vettura possiede piu posti auto es: 4 o 5 si puo seguire la seguente descrizione: </p>
+<div class="imageSymptoms">
+<img src="img/carposition.jpg" alt="car position">
+</div>
+</div>
+<hr size="2px" color="black">
+</section>
+
+
+<footer class="finalFooter">
+<p>Developer: <span id="developer" >Manuel Cannone</span>  <p id="devDescription" class="devDescription">Ciao sono Manuel un giovane aspirante developer ho 16, e ho realizzato questo sito utilizzando javascript ed uno dei suoi più importanti freemwork ovvero node.js, se pensi di potermi dare una mano per crescere virtualmente contantattami all' email qui di fianco (sviluppo beckend) </p> </p>
+<p><a href="mailto:manuelcannone50@gmail.com">e-mail</a></p>
+
+
+</footer>
+   <div id="minislide">
+    <p>Il sito è stato creto solo per divertimento, i dati sono tutti reali, presi dalla seguente <a href="https://covid19api.com/">https://covid19api.com/</a>ed aggiornati ad ogni click</p>
+  </div>
+
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+
+  //data world 
+const dataWorld = document.querySelector(".circle");
+
+axios.get("http://localhost:1337/covid/world")
+.then((result) => {
+let circle = document.querySelector(".circle");
+circle.innerHTML="<h1>"+result.data+"</h1>";
+
+}).catch((err) => {
+  circle.innerHTML="<h1>errore</h1>";
+  alert("Qualcosa non è andata a buon fine "+err);
+});
+
+let sendReq = document.querySelector(".bt");
+
+sendReq.addEventListener("click", () => {
+
+  
+
+  let text =  document.querySelector("input");
+//manegament status cases
+axios.get("/covid?countries="+text.value)
+.then((result) => {
+if(result.data.Country !== undefined || result !== null || result !== ""){
+  let date = document.querySelector("#date");
+  date.innerHTML="<p>" + result.data.Date + "</p>";
+
+  let confirmed = document.querySelector("#confirmed");
+  confirmed.innerHTML="<p>" + result.data.Confirmed + "</p>";
+
+  let death = document.querySelector("#death");
+  death.innerHTML="<p>" + result.data.Deaths + "</p>";
+
+  let actived = document.querySelector("#actived");
+  actived.innerHTML="<p>" + result.data.Active + "</p>";
+}else{
+alert("Devi inserire il nome di uno stato es. IT");
+}
+}).catch((err) => {
+  alert("errore "+err);
+});
+
+});
+
+</script> 
+<script>
+ document.querySelector("#developer").addEventListener("mouseout", () => {
+document.querySelector("#devDescription").toggleAttribute("id");
+});
+
+</script>
+</body>
+</html>
