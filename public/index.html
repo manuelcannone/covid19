@@ -110,7 +110,7 @@
   //data world 
 const dataWorld = document.querySelector(".circle");
 
-axios.get("http://localhost:1337/covid/world")
+axios.get("/covid/world")
 .then((result) => {
 let circle = document.querySelector(".circle");
 circle.innerHTML="<h1>"+result.data+"</h1>";
