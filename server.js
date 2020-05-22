@@ -8,7 +8,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
 //description servers
-const port = 1337;
+const port = process.env.PORT;
 
 //use the path to manage navigation
 app.use("/", route);
